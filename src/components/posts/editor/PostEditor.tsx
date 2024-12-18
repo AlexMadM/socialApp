@@ -7,10 +7,9 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
-import "./styles.css";
+import "./style.css";
 
 export default function PostEditor() {
-
 
     const editor = useEditor({
         extensions: [

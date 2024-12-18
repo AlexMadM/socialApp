@@ -31,14 +31,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
       <ReactQueryProvider>
-        <ThemeProvider
+        {/* <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-        >
+        > */}
           {children}
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </ReactQueryProvider>
       <Toaster />
       </body>

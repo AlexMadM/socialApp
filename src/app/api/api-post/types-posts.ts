@@ -1,11 +1,11 @@
 export interface GetAllPostsResponse {
     totalCount: number;
     pageSize: number;
-    items: Post[];
+    items: PostType[];
     totalUsers: number;
 }
 
-export interface Post {
+export interface PostType {
     id: number;
     userName: string;
     description: string;

@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    staleTimes: {
-      dynamic: 30,
-    },
-  },
+	reactStrictMode: true,
+	images: {
+		domains: [
+			"images.unsplash.com",
+			"storage.yandexcloud.net",
+			"staging-it-incubator.s3.eu-central-1.amazonaws.com",
+			"i.ibb.co",
+		],
+	},
 };
 
 export default nextConfig;
