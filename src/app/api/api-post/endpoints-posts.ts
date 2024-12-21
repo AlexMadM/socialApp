@@ -1,7 +1,7 @@
 import {createInstance, SecondParameter} from "@/app/api/api-instanse";
 import {
     CreatePostArgs,
-    GetAllPostsResponse,
+    GetAllPostsResponse, PostByUserResponse, ServerResponse,
     UploadFileForCreatePostResponse,
     UploadFileResponse
 } from "@/app/api/api-post/types-posts";
@@ -59,4 +59,11 @@ export const createPostDescription = (data: CreatePostArgs) => {
             childrenMetadata: data.childrenMetadata,
         },
     });
+};
+
+export const getPostByUserName = (userName: string, options?: SecondParameter<typeof createInstance>) => {
+    return createInstance<PostByUserResponse>(
+        { url: `/v1/posts/${userName}`, method: "get" },
+        options,
+    );
 };

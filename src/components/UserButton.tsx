@@ -14,6 +14,7 @@ import {
 import UserAvatar from "@/components/UserAvatar";
 import {useTheme} from "next-themes";
 import {useSignOut} from "@/app/(auth)/auth-api/use-auth-autorization";
+import {useQueryClient} from "@tanstack/react-query";
 
 
 interface UserButtonProps {
@@ -22,8 +23,13 @@ interface UserButtonProps {
 
 export default function UserButton({ className }: UserButtonProps) {
     const { userName,userId } = useSession();
+    const queryClient = useQueryClient();
     const {theme,setTheme} = useTheme();
     const {singOut}=useSignOut()
+    const handleLogout = () => {
+        queryClient.clear();
+        singOut();
+    };
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -68,9 +74,7 @@ export default function UserButton({ className }: UserButtonProps) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
 
-                    onClick={() => {
-                         singOut()
-                    }}
+                  onClick={handleLogout}
                 >
                     <LogOutIcon className="mr-2 size-4" />
                     Logout

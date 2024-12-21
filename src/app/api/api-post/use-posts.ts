@@ -1,12 +1,12 @@
 import {
     createPostDescription,
-    getAllPosts,
+    getAllPosts, getPostByUserName,
     uploadFileForCreatePost,
     uploadFileForPost
 } from "@/app/api/api-post/endpoints-posts";
 import {
     CreatePostDto,
-    GetAllPostsResponse,
+    GetAllPostsResponse, PostByUserResponse,
     UploadFileForCreatePostResponse,
     UploadFilePayload,
     UploadFileResponse
@@ -20,6 +20,13 @@ export const useGetAllPosts = (queryParams: string) => {
     return useQuery<GetAllPostsResponse>({
         queryKey: ["postsa", queryParams],
         queryFn: () => getAllPosts(queryParams),
+    });
+};
+
+export const useGetPostByUserName = (userName: string) => {
+    return useQuery<PostByUserResponse>({
+        queryKey: ["post-feed", 'for-you'],
+        queryFn: () => getPostByUserName(userName),
     });
 };
 

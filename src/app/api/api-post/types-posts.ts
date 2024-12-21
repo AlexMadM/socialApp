@@ -68,3 +68,45 @@ export type UploadFilePayload = {
 export type UploadFileForCreatePostResponse = {
     images: Image[];
 };
+
+
+
+
+export type ServerResponse = {
+    id: number;
+    userName: string;
+    description: string;
+    location: string;
+    images: Image[];
+    createdAt: string; // ISO 8601 date string
+    updatedAt: string; // ISO 8601 date string
+    ownerId: number;
+    avatarOwner: string;
+    owner: Owner;
+    likesCount: number;
+    isLiked: boolean;
+    avatarWhoLikes: boolean;
+};
+
+type Item = {
+    id: number;
+    userName: string;
+    description: string;
+    location: string;
+    images: Image[];
+    createdAt: string; // ISO 8601 date string
+    updatedAt: string; // ISO 8601 date string
+    ownerId: number;
+    avatarOwner: string;
+    owner: Owner;
+    likesCount: number;
+    isLiked: boolean;
+    avatarWhoLikes: boolean;
+};
+
+export type PostByUserResponse = {
+    pageSize: number;
+    totalCount: number;
+    notReadCount: number;
+    items: Item[];
+};
