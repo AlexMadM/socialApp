@@ -8,8 +8,12 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
 import "./style.css";
+import {useCreatePostDescription} from "@/app/api/api-post/use-posts";
+import {useSubmitPostMutation} from "@/components/posts/editor/mutation";
 
 export default function PostEditor() {
+    const {mutate}=useCreatePostDescription()
+    const mutation=useSubmitPostMutation()
 
     const editor = useEditor({
         extensions: [
@@ -28,8 +32,12 @@ export default function PostEditor() {
             blockSeparator: "\n",
         }) || "";
 
-    async function onSubmit() {
-        // await submitPost(input);
+     function onSubmit() {
+
+       mutation.mutate({
+            description: input,
+            childrenMetadata: [{ uploadId:'34' }],
+        });
         editor?.commands.clearContent();
     }
 

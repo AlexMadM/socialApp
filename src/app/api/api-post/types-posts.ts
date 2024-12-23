@@ -110,3 +110,9 @@ export type PostByUserResponse = {
     notReadCount: number;
     items: Item[];
 };
+export interface GetAllPostsArgs {
+    pageSize?: number
+    sortBy?: string
+    sortDirection?: "asc" | "desc" | undefined
+    endCursorPostId?: number
+}

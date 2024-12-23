@@ -1,19 +1,22 @@
 import {createInstance, SecondParameter} from "@/app/api/api-instanse";
 import {
-    CreatePostArgs,
+    CreatePostArgs, GetAllPostsArgs,
     GetAllPostsResponse, PostByUserResponse, ServerResponse,
     UploadFileForCreatePostResponse,
     UploadFileResponse
 } from "@/app/api/api-post/types-posts";
 
 export const getAllPosts = (
-    queryParams: string,
+    queryParams: GetAllPostsArgs,
     options?: SecondParameter<typeof createInstance>,
 ) => {
+    const { endCursorPostId, ...params } = queryParams ?? {}
+    console.log(params);
     return createInstance<GetAllPostsResponse>(
-        { url: `/v1/public-posts/all/?${queryParams}`, method: "get" },
+        { url: `/v1/public-posts/all/?${endCursorPostId}`,params, method: "get" },
         options,
     );
+
 };
 
 export const uploadFileForPost = (

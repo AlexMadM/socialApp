@@ -5,23 +5,54 @@ import {
     uploadFileForPost
 } from "@/app/api/api-post/endpoints-posts";
 import {
-    CreatePostDto,
+    CreatePostDto, GetAllPostsArgs,
     GetAllPostsResponse, PostByUserResponse,
     UploadFileForCreatePostResponse,
     UploadFilePayload,
     UploadFileResponse
 } from "@/app/api/api-post/types-posts";
-import {QueryClient, useMutation, useQuery} from "@tanstack/react-query";
+import {QueryClient, useInfiniteQuery, useMutation, useQuery} from "@tanstack/react-query";
 import {createInstance} from "@/app/api/api-instanse";
 export const queryClient = new QueryClient();
 
 
-export const useGetAllPosts = (queryParams: string) => {
-    return useQuery<GetAllPostsResponse>({
-        queryKey: ["postsa", queryParams],
-        queryFn: () => getAllPosts(queryParams),
+// export const useGetAllPosts = (queryParams: any) => {
+//     return useQuery<GetAllPostsResponse>({
+//         queryKey: ["postsa", queryParams],
+//         queryFn: () => getAllPosts(queryParams),
+//     });
+// };
+
+export const useGetAllPosts = (queryParams: GetAllPostsArgs) => {
+    return useInfiniteQuery({
+        queryKey: ["post-feed", "for-you", queryParams],
+        queryFn: ({ pageParam }) => {
+            // Объединяем initial queryParams с pageParam для endCursorPostId
+            return getAllPosts({
+                ...queryParams,
+                endCursorPostId: pageParam ?? queryParams.endCursorPostId,
+                // pageSize:pageParam ?? 4
+            });
+        },
+        initialPageParam: queryParams.endCursorPostId ?? null,
+        getNextPageParam: (lastPage) => {
+            // Возвращаем ID последнего поста
+            if (lastPage?.items?.length) {
+                const lastItem = lastPage.items[lastPage.items.length - 1];
+                return lastItem.id; // Возвращаем ID последнего поста
+            }
+            return null; // Если постов больше нет
+        }
     });
 };
+
+
+
+
+
+
+
+
 
 export const useGetPostByUserName = (userName: string) => {
     return useQuery<PostByUserResponse>({
