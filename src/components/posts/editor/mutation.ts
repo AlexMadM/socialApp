@@ -1,12 +1,13 @@
 import { useToast } from "@/components/ui/use-toast";
 import {
     InfiniteData,
-    QueryFilters,
+    QueryFilters, Updater,
     useMutation,
     useQueryClient,
 } from "@tanstack/react-query";
-import {useCreatePostDescription} from "@/app/api/api-post/use-posts";
+
 import {createPostDescription} from "@/app/api/api-post/endpoints-posts";
+import {CreatePostDto, PostByUserResponse} from "@/app/api/api-post/types-posts";
 
 
 export function useSubmitPostMutation() {
@@ -21,22 +22,19 @@ export function useSubmitPostMutation() {
 
             await queryClient.cancelQueries(queryFilter);
 
-            queryClient.setQueriesData<InfiniteData<any, string | null>>(
+            queryClient.setQueriesData< PostByUserResponse>(
                 queryFilter,
                 (oldData) => {
-                    const firstPage = oldData?.pages[0];
+                    const firstPage= oldData?.items;
 
                     if (firstPage) {
                         return {
-                            pageParams: oldData.pageParams,
-                            pages: [
-                                {
-                                    posts: [newPost, ...firstPage.posts],
-                                    nextCursor: firstPage.nextCursor,
-                                },
-                                ...oldData.pages.slice(1),
-                            ],
-                        };
+
+                            items: [newPost, ...firstPage],
+                        }
+
+
+
                     }
                 },
             );
